@@ -1,6 +1,7 @@
 # Takumi
 
 Takumi is an innovative habit-tracking application designed to empower users to cultivate positive habits, enhance mental well-being, and achieve personal goals effectively.
+[Documentation/Ideas](https://docs.google.com/document/d/1QVhTsMwF7zP3P6LguIMOoLpkOAARGh12QTukaMIvudM/edit?usp=sharing)
 
 ## Features
 
