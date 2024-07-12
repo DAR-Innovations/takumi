@@ -1,3 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+	.scrollable::-webkit-scrollbar {
+		display: unset;
+	}
+	.scrollable {
+		-ms-overflow-style: unset;
+		scrollbar-width: unset;
+	}
+}
+
+@layer base {
+	:root {
+		--background: #101010;
+		--foreground: #ffffff;
+
+		--muted: #1f2937;
+		--muted-foreground: #9ca3af;
+
+		--popover: #030712;
+		--popover-foreground: #f9fafb;
+
+		--card: #030712;
+		--card-foreground: #f9fafb;
+
+		--border: #303030;
+		--input: #303030;
+
+		--primary: #adfa1d;
+		--primary-foreground: #101010;
+
+		--secondary: #b286fd;
+		--secondary-foreground: #ffffff;
+
+		--accent: #e55733;
+		--accent-foreground: #ffffff;
+
+		--destructive: #7f1d1d;
+		--destructive-foreground: #f9fafb;
+
+		--ring: #d1d5db;
+
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: #ffffff;
+		--foreground: #030712;
+
+		--muted: #f3f4f6;
+		--muted-foreground: #6b7280;
+
+		--popover: #ffffff;
+		--popover-foreground: #030712;
+
+		--card: #ffffff;
+		--card-foreground: #030712;
+
+		--border: #e5e7eb;
+		--input: #e5e7eb;
+
+		--primary: #111827;
+		--primary-foreground: #f9fafb;
+
+		--secondary: #f3f4f6;
+		--secondary-foreground: #111827;
+
+		--accent: #f3f4f6;
+		--accent-foreground: #111827;
+
+		--destructive: #ef4444;
+		--destructive-foreground: #f9fafb;
+
+		--ring: #030712;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		font-family: 'Inter', sans-serif;
+		@apply bg-background text-foreground text-sm;
+	}
+}

@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import {  RouterView } from 'vue-router'
+import { APP_LAYOUTS } from '@/core/config/routes.config'
+import AppDefaultLayout from '@/core/layouts/default/app-default-layout.vue'
+import AppPrimaryLayout from '@/core/layouts/primary/app-primary-layout.vue'
 </script>
 
 <template>
-	<router-view />
-</template>
+	<AppPrimaryLayout v-if="$route.meta.layout === APP_LAYOUTS.PRIMARY_LAYOUT">
+		<router-view />
+	</AppPrimaryLayout>
 
-<style scoped></style>
+	<AppDefaultLayout v-else>
+		<router-view />
+	</AppDefaultLayout>
+</template>
