@@ -53,6 +53,17 @@
 		--ring: #d1d5db;
 
 		--radius: 0.5rem;
+
+		--vis-tooltip-background-color: none !important;
+		--vis-tooltip-border-color: none !important;
+		--vis-tooltip-text-color: none !important;
+		--vis-tooltip-shadow-color: none !important;
+		--vis-tooltip-backdrop-filter: none !important;
+		--vis-tooltip-padding: none !important;
+
+		--vis-primary-color: var(--primary);
+		--vis-secondary-color: var(--secondary);
+		--vis-text-color: var(--muted-foreground);
 	}
 
 	.dark {
@@ -94,5 +105,19 @@
 	body {
 		font-family: 'Inter', sans-serif;
 		@apply bg-background text-foreground text-sm;
+	}
+}
+
+.ripple {
+	position: absolute;
+	transform: scale(0);
+	animation: ripple 600ms linear;
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes ripple {
+	to {
+		transform: scale(4);
+		opacity: 0;
 	}
 }

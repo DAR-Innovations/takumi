@@ -17,13 +17,15 @@
 				:start-color="progressColor"
 				:stop-color="progressColor"
 			>
-				<p class="text-xl">{{ completedSteps }} / {{ totalSteps }}</p>
+				<p class="text-lg font-medium">
+					<span class="text-2xl">{{ completedSteps }}</span> / {{ totalSteps }}
+				</p>
 				<p class="mt-1 text-gray-500">{{ progressLabel }}</p>
 			</RadialProgress>
 		</div>
 
 		<div class="flex justify-center mt-5">
-			<div class="grid grid-cols-2 bg-[#313131] rounded-full">
+			<div class="grid grid-cols-2 bg-[#242424] rounded-full">
 				<button
 					class="flex justify-center items-center px-5 py-3 border-r border-r-[#464646]"
 					@click='emit("subtract")'
