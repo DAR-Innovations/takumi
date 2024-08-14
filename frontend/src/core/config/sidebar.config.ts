@@ -8,6 +8,6 @@ interface MenuItem {
 
 export const sidebarItems: MenuItem[] = [
 	{ name: 'Dashboard', routeName: ROUTES.HOME, icon: 'pi pi-home' },
-	{ name: 'Activities', routeName: ROUTES.ACTIVITIES, icon: 'pi pi-chart-bar' },
+	{ name: 'Analytics', routeName: ROUTES.ANALYTICS, icon: 'pi pi-chart-bar' },
 	{ name: 'Settings', routeName: ROUTES.SETTINGS, icon: 'pi pi-cog' },
 ]
