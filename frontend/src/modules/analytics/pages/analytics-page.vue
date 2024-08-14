@@ -1,14 +1,14 @@
 <template>
-	<date-switcher />
+	<section-switcher
+		:selected-section="selectedSection"
+		@select="onSelectSection"
+	/>
 
 	<div class="mt-4">
-		<section-switcher
-			:selected-section="selectedSection"
-			@select="onSelectSection"
-		/>
+		<date-switcher />
 	</div>
 
-	<div class="mt-8">
+	<div class="mt-6">
 		<component :is="currentPageComponent" />
 	</div>
 </template>
@@ -18,6 +18,7 @@ import { AnalyticsSections } from '@/modules/analytics/models/analytics-sections
 import { computed, defineAsyncComponent, ref } from 'vue'
 import DateSwitcher from "../components/date-switcher.vue"
 import SectionSwitcher from "../components/section-switcher.vue"
+
 
 const componentsMap = {
 	[AnalyticsSections.HORMONES_LEVEL]: defineAsyncComponent(() => import('@/modules/analytics/pages/analytics-hormones-page.vue')),

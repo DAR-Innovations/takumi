@@ -7,7 +7,9 @@ interface MenuItem {
 }
 
 export const sidebarItems: MenuItem[] = [
+	{ name: 'Create', routeName: ROUTES.CREATE, icon: 'pi pi-plus' },
 	{ name: 'Dashboard', routeName: ROUTES.HOME, icon: 'pi pi-home' },
 	{ name: 'Analytics', routeName: ROUTES.ANALYTICS, icon: 'pi pi-chart-bar' },
-	{ name: 'Settings', routeName: ROUTES.SETTINGS, icon: 'pi pi-cog' },
+	{ name: 'Events', routeName: ROUTES.EVENTS, icon: 'pi pi-compass' },
+	{ name: 'Profile', routeName: ROUTES.PROFILE, icon: 'pi pi-user' },
 ]

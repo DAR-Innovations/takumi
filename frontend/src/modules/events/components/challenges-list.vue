@@ -3,7 +3,7 @@
 		<div
 			v-for="challenge in challenges"
 			:key="challenge.title"
-			class="rounded-xl bg-[#171717] w-64 p-5 flex-shrink-0"
+			class="rounded-xl bg-card w-64 p-5 flex-shrink-0"
 		>
 			<p class="font-semibold text-base truncate">{{ challenge.title }} {{ challenge.icon }}</p>
 
@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import { getTimeLeft } from '@/core/utils/time.utils'
-import { ref } from 'vue'
+import { getTimeLeft } from '@/core/utils/time.utils';
+import { ref } from 'vue';
 
 const today = new Date();
 

@@ -4,7 +4,7 @@
 			<div class="w-full relative flex items-center gap-5">
 				<button
 					@click="$router.back()"
-					class="border border-[#242424] px-3 py-2 rounded-xl"
+					class="border border-border px-2 py-1 rounded-xl"
 				>
 					<i class="text-xl pi pi-angle-left"></i>
 				</button>

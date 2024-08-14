@@ -6,7 +6,7 @@
 			title="Water"
 			emoji="💧"
 			progress-label="glass"
-			progress-color="var(--secondary)"
+			progress-color="var(--primary)"
 			@add="onWaterAdd"
 			@subtract="onWaterSubtract"
 		/>
@@ -16,7 +16,7 @@
 			title="Sleep"
 			emoji="😴"
 			progress-label="hours"
-			progress-color="var(--primary)"
+			progress-color="#EA580B"
 			@add="onSleepAdd"
 			@subtract="onSleepSubtract"
 		/>

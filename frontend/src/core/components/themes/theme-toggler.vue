@@ -1,26 +1,29 @@
 <script setup lang="ts">
-import { Button } from '@/core/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/core/components/ui/dropdown-menu'
-import { Icon } from '@iconify/vue'
 import { useColorMode } from '@vueuse/core'
+import { computed } from 'vue'
 
 const mode = useColorMode()
+
+const iconsByMode = {
+  'light': "pi pi-moon",
+  'dark': "pi pi-sun",
+  'auto': "pi pi-palette"
+}
+
+const iconType = computed(() => iconsByMode[mode.value])
 </script>
 
 <template>
 	<DropdownMenu>
 		<DropdownMenuTrigger as-child>
-			<Button variant="outline">
-				<Icon
-					icon="radix-icons:moon"
-					class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-				/>
-				<Icon
-					icon="radix-icons:sun"
-					class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+			<div variant="outline">
+				<span
+					class="text-lg"
+					:class="iconType"
 				/>
 				<span class="sr-only">Toggle theme</span>
-			</Button>
+			</div>
 		</DropdownMenuTrigger>
 		<DropdownMenuContent align="end">
 			<DropdownMenuItem @click="mode = 'light'"> Light </DropdownMenuItem>

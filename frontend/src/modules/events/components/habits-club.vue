@@ -3,7 +3,7 @@
 		<div
 			v-for="club in clubs"
 			:key="club.name"
-			class="rounded-xl bg-[#171717] min-w-fit p-5"
+			class="rounded-xl bg-card min-w-fit p-5"
 		>
 			<span class="text-4xl">{{ club.icon }}</span>
 			<p class="font-semibold mt-4">{{ club.name }}</p>
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 	const clubs = ref([
 		{name: "Bikers", members: 423, icon: "🏍️"},

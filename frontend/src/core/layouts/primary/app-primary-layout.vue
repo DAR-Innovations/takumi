@@ -13,12 +13,12 @@ const currentPageTitle = computed(() => route.meta.pageTitle ?? route.meta.title
 
 <template>
 	<div class="flex w-full h-screen overflow-hidden">
-		<aside class="sm:flex flex-col hidden p-6 border-r border-border w-full max-w-[250px] h-full">
+		<aside class="sm:flex flex-col hidden p-10 pr-4 py-6 w-fit h-full">
 			<AppPrimarySidebar />
 		</aside>
 
 		<main class="relative flex-1 w-full h-full overflow-y-auto">
-			<header class="w-full flex justify-between items-center p-4 sm:p-7">
+			<header class="w-full flex justify-between items-center p-4 sm:p-6">
 				<slot name="header">
 					<PageTitle>{{ currentPageTitle }}</PageTitle>
 
@@ -26,21 +26,23 @@ const currentPageTitle = computed(() => route.meta.pageTitle ?? route.meta.title
 						<slot name="right-side" />
 
 						<router-link :to="{name:ROUTES.NOTIFICATIONS}">
-							<button class="bg-[#242424] px-3 py-2 rounded-xl">
-								<i class="text-xl pi pi-bell"></i>
+							<button class="bg-card w-11 h-11 p-2 rounded-lg flex items-center justify-center">
+								<i class="text-lg pi pi-bell"></i>
 							</button>
 						</router-link>
 
-						<ThemeToggler />
+						<button class="bg-card w-11 h-11 p-2 rounded-lg flex items-center justify-center">
+							<ThemeToggler />
+						</button>
 					</div>
 				</slot>
 			</header>
 
-			<div class="p-4 sm:p-7 mb-[300px] h-full">
+			<div class="p-4 sm:p-6 mb-[300px] h-full">
 				<slot></slot>
 			</div>
 
-			<div class="right-4 bottom-4 left-4 fixed sm:hidden bg-[#242424] px-8 py-4 rounded-3xl">
+			<div class="right-4 bottom-4 left-4 fixed sm:hidden bg-card px-8 py-4 rounded-3xl">
 				<AppPrimaryTabs />
 			</div>
 		</main>

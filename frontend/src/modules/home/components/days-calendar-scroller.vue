@@ -3,27 +3,27 @@
 		<div
 			v-for="item in calendarDays"
 			:key="item.id"
-			class=" min-w-16"
+			class="min-w-16"
 			@click="onSelectDay(item.day)"
+			:data-day="item.day"
 		>
 			<div
-				class="bg-[#242424] flex items-center justify-center flex-col rounded-xl gap-1 py-3"
-				:class='{
-				"bg-primary text-primary-foreground": item.day === currentDay
-			}'
+				class="bg-card flex items-center justify-center flex-col rounded-xl gap-1 py-3"
+				:class="{
+					'bg-primary text-primary-foreground': item.day === currentDay, 
+					'bg-muted text-muted-foreground': item.day === selectedDay
+				}"
 			>
 				<p class="font-bold">{{ item.weekDay }}</p>
 				<p class="font-bold">{{ item.day }}</p>
 			</div>
-
-			<div class="flex justify-center mt-3 ">
+			<div class="flex justify-center mt-3">
 				<p
 					v-if="item.mood"
 					class="text-4xl"
 				>
 					{{ item.mood }}
 				</p>
-
 				<img
 					v-else
 					alt="empty emoji"
@@ -36,23 +36,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
-const currentDay = ref(25)
+const currentDate = new Date();
+const currentDay = currentDate.getDate()
+const selectedDay = ref(currentDate.getDate());
+const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const moods = ['😡', '😔', '🙂', '😐'];
 
-const calendarDays = [
-	{id: 1, weekDay: "Mon", day: 24, mood: "😔"},
-	{id: 2, weekDay: "Tue", day: 25, mood: "😡"},
-	{id: 3, weekDay: "Wed", day: 26, mood: "😡"},
-	{id: 4, weekDay: "Thu", day: 27, mood: "😐"},
-	{id: 5, weekDay: "Fri", day: 28, mood: "🙂"},
-	{id: 6, weekDay: "Sat", day: 29, mood: null},
-	{id: 7, weekDay: "Sun", day: 30, mood: null}
-]
+const calendarDays = ref(
+  Array.from({ length: daysInMonth }, (_, i) => {
+    const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), i + 1);
+    return {
+      id: i + 1,
+      weekDay: weekDays[date.getDay()],
+      day: i + 1,
+      mood: i + 1 < selectedDay.value ? moods[Math.floor(Math.random() * moods.length)] : null,
+    };
+  })
+);
 
 const onSelectDay = (day: number) => {
-	currentDay.value = day
-}
+  selectedDay.value = day;
+};
+
+onMounted(() => {
+  const currentDayElement = document.querySelector(`[data-day="${selectedDay.value}"]`);
+  if (currentDayElement) {
+    currentDayElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
 </script>
 
 <style scoped></style>

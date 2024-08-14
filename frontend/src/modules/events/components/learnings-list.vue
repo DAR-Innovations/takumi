@@ -3,12 +3,12 @@
 		<div
 			v-for="learning in learnings"
 			:key="learning.title"
-			class="relative rounded-xl bg-[#171717] overflow-hidden min-w-64 max-w-64"
+			class="relative rounded-xl bg-card overflow-hidden min-w-64 max-w-64"
 		>
 			<img
 				:src="learning.imageUrl"
 				:alt="learning.title"
-				class="w-full h-32 object-cover bg-[#242424]"
+				class="w-full h-32 object-cover bg-card"
 			/>
 			<div class="p-4 flex items-center gap-3 z-10">
 				<i class="pi pi-book"></i>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 const learnings = ref([
   { title: "Why should we drink water often?", imageUrl: "https://diy-ideas.oss-accelerate.aliyuncs.com/wp-content/uploads/2024/02/filtered-water-vs-distilled-water-1024x682.png!webp" },
