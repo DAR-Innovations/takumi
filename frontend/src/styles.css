@@ -23,35 +23,33 @@
 
 @layer base {
 	:root {
-		--background: #101010;
-		--foreground: #ffffff;
+		--background: hsl(0 0% 100%);
+		--foreground: hsl(240 10% 3.9%);
 
-		--muted: #1f2937;
-		--muted-foreground: #9ca3af;
+		--card: hsl(0 0% 100%);
+		--card-foreground: hsl(240 10% 3.9%);
 
-		--popover: #030712;
-		--popover-foreground: #f9fafb;
+		--popover: hsl(0 0% 100%);
+		--popover-foreground: hsl(240 10% 3.9%);
 
-		--card: #030712;
-		--card-foreground: #f9fafb;
+		--primary: hsl(142.1 76.2% 36.3%);
+		--primary-foreground: hsl(355.7 100% 97.3%);
 
-		--border: #303030;
-		--input: #303030;
+		--secondary: hsl(240 4.8% 95.9%);
+		--secondary-foreground: hsl(240 5.9% 10%);
 
-		--primary: #adfa1d;
-		--primary-foreground: #101010;
+		--muted: hsl(240 4.8% 95.9%);
+		--muted-foreground: hsl(240 3.8% 46.1%);
 
-		--secondary: #b286fd;
-		--secondary-foreground: #ffffff;
+		--accent: hsl(240 4.8% 95.9%);
+		--accent-foreground: hsl(240 5.9% 10%);
 
-		--accent: #e55733;
-		--accent-foreground: #ffffff;
+		--destructive: hsl(0 84.2% 60.2%);
+		--destructive-foreground: hsl(0 0% 98%);
 
-		--destructive: #7f1d1d;
-		--destructive-foreground: #f9fafb;
-
-		--ring: #d1d5db;
-
+		--border: hsl(240 5.9% 90%);
+		--input: hsl(240 5.9% 90%);
+		--ring: hsl(142.1 76.2% 36.3%);
 		--radius: 0.5rem;
 
 		--vis-tooltip-background-color: none !important;
@@ -67,34 +65,33 @@
 	}
 
 	.dark {
-		--background: #ffffff;
-		--foreground: #030712;
+		--background: hsl(20 14.3% 4.1%);
+		--foreground: hsl(0 0% 95%);
 
-		--muted: #f3f4f6;
-		--muted-foreground: #6b7280;
+		--card: hsl(24 9.8% 10%);
+		--card-foreground: hsl(0 0% 95%);
 
-		--popover: #ffffff;
-		--popover-foreground: #030712;
+		--popover: hsl(0 0% 9%);
+		--popover-foreground: hsl(0 0% 95%);
 
-		--card: #ffffff;
-		--card-foreground: #030712;
+		--primary: hsl(142.1 70.6% 45.3%);
+		--primary-foreground: hsl(144.9 80.4% 10%);
 
-		--border: #e5e7eb;
-		--input: #e5e7eb;
+		--secondary: hsl(240 3.7% 15.9%);
+		--secondary-foreground: hsl(0 0% 98%);
 
-		--primary: #111827;
-		--primary-foreground: #f9fafb;
+		--muted: hsl(0 0% 15%);
+		--muted-foreground: hsl(240 5% 64.9%);
 
-		--secondary: #f3f4f6;
-		--secondary-foreground: #111827;
+		--accent: hsl(12 6.5% 15.1%);
+		--accent-foreground: hsl(0 0% 98%);
 
-		--accent: #f3f4f6;
-		--accent-foreground: #111827;
+		--destructive: hsl(0 62.8% 30.6%);
+		--destructive-foreground: hsl(0 85.7% 97.3%);
 
-		--destructive: #ef4444;
-		--destructive-foreground: #f9fafb;
-
-		--ring: #030712;
+		--border: hsl(240 3.7% 15.9%);
+		--input: hsl(240 3.7% 15.9%);
+		--ring: hsl(142.4 71.8% 29.2%);
 	}
 }
 
