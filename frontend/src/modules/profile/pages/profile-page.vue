@@ -10,34 +10,29 @@
 
 		<div>
 			<p class="font-semibold text-xl">{{profile.name}}</p>
-			<div class="flex items-center gap-2 mt-1">
-				<img
-					src="@/core/assets/icons/kaiteki-primary.svg"
-					alt="kaiteki coin"
-					class="w-4 h-4"
-				/>
-				<p class="text-primary">{{ profile.coins }}</p>
+			<div class="flex items-center gap-1">
+				<i class="text-base text-primary pi pi-bolt"></i>
+				<p class="text-foreground">{{ profile.coins }}</p>
 			</div>
 		</div>
 	</div>
 
 	<div class="flex flex-col mt-8">
-		<router-link
+		<template
 			v-for="section in sections"
 			:key="section.name"
-			:to="{name: section.routeName}"
-			class="w-full flex items-center gap-4 justify-between p-4"
 		>
-			<div class="flex items-center gap-4">
-				<i
-					class="text-lg"
-					:class="section.icon"
-				/>
-				<p class="text-base">{{ section.name }}</p>
-			</div>
+			<router-link
+				:to="{name: section.routeName}"
+				class="w-full flex items-center gap-4 justify-between"
+			>
+				<p class="text-sm">{{ section.name }}</p>
 
-			<i class="pi pi-angle-right text-gray-300 text-lg"></i>
-		</router-link>
+				<i class="pi pi-angle-right text-gray-400 dark:text-gray-500 text-lg"></i>
+			</router-link>
+
+			<Separator class="my-4" />
+		</template>
 	</div>
 </template>
 
@@ -45,6 +40,7 @@
 import Avatar from '@/core/components/ui/avatar/Avatar.vue'
 import AvatarFallback from '@/core/components/ui/avatar/AvatarFallback.vue'
 import AvatarImage from '@/core/components/ui/avatar/AvatarImage.vue'
+import Separator from '@/core/components/ui/separator/Separator.vue'
 import { ROUTES } from '@/core/config/routes.config'
 import { ref } from 'vue'
 

@@ -1,7 +1,7 @@
 <template>
-	<div class="bg-[#171717] p-4 rounded-xl">
+	<div class="bg-card p-4 rounded-xl">
 		<div class="flex items-center gap-3">
-			<span class="bg-[#242424] p-1 rounded-full text-lg">{{ emoji }}</span>
+			<span class="bg-card p-1 rounded-full text-lg">{{ emoji }}</span>
 			<p class="text-base">{{ title }}</p>
 		</div>
 
@@ -25,7 +25,7 @@
 		</div>
 
 		<div class="flex justify-center mt-5">
-			<div class="grid grid-cols-2 bg-[#242424] rounded-full">
+			<div class="grid grid-cols-2 bg-card rounded-full">
 				<button
 					class="flex justify-center items-center px-5 py-3 border-r border-r-[#464646]"
 					@click='emit("subtract")'
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import RadialProgress from "vue3-radial-progress"
+import RadialProgress from "vue3-radial-progress";
 
 defineProps({
 	completedSteps: Number,

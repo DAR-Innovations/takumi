@@ -1,12 +1,12 @@
 <template>
-	<div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+	<div class="grid grid-cols-3 gap-2 overflow-x-auto no-scrollbar">
 		<button
 			v-for="section in sections"
 			:key="section.value"
 			class="min-w-fit px-5 py-3 rounded-xl"
 			:class='{
-				"bg-secondary text-secondary-foreground": selectedSection === section.value,
-				"bg-[#171717] text-white": selectedSection !== section.value
+				"bg-primary text-primary-foreground": selectedSection === section.value,
+				"bg-card text-card-foreground": selectedSection !== section.value
 
 			}'
 			@click="setSelectedSection(section.value)"
@@ -28,8 +28,8 @@ const emit = defineEmits<{
 }>()
 
 const sections = [
-	{label: "Hormones Level", value: AnalyticsSections.HORMONES_LEVEL},
-	{label: "Mental Health", value: AnalyticsSections.MENTAL_HEALTH},
+	{label: "Hormones", value: AnalyticsSections.HORMONES_LEVEL},
+	{label: "Mental", value: AnalyticsSections.MENTAL_HEALTH},
 	{label: "Productivity", value: AnalyticsSections.PRODUCTIVITY}
 ]
 

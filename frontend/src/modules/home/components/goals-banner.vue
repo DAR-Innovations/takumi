@@ -1,5 +1,5 @@
 <template>
-	<div class="flex items-center gap-5 bg-[#171717] p-4 rounded-xl">
+	<div class="flex items-center gap-5 bg-card p-4 rounded-xl">
 		<RadialProgress
 			:diameter="65"
 			:completed-steps="completedSteps"
@@ -22,8 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import RadialProgress from "vue3-radial-progress"
+import { ref } from 'vue';
+import RadialProgress from "vue3-radial-progress";
 
 const completedSteps = ref(4)
 const totalSteps = ref(10)

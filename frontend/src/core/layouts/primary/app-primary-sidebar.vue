@@ -13,30 +13,46 @@ const isActiveRoute = (routeName: string) => {
 </script>
 
 <template>
-	<div class="flex flex-col flex-1 gap-6 overflow-y-auto no-scrollbar">
+	<div class="h-full flex flex-col items-center no-scrollbar overflow-">
+		<div>
+			<button>
+				<img
+					src="@/core/assets/icons/logo.svg"
+					alt="logo"
+					class="w-10 h-10"
+				/>
+			</button>
+		</div>
+
 		<div
-			v-for="sidebarItem in sidebarItems"
-			:key="sidebarItem.name"
+			class="h-full flex flex-col items-center justify-center flex-1 gap-2 overflow-y-auto no-scrollbar"
 		>
-			<router-link
-				v-slot="{ href, navigate }"
-				:to="{name: sidebarItem.routeName}"
-				custom
+			<template
+				v-for="sidebarItem in sidebarItems"
+				:key="sidebarItem.name"
 			>
-				<a
-					ripple
-					class="flex items-center cursor-pointer"
-					:class='{
+				<router-link
+					v-slot="{ href, navigate }"
+					:to="{name: sidebarItem.routeName}"
+					custom
+				>
+					<a
+						ripple
+						class="flex items-center justify-center cursor-pointer w-14 h-14 p-3 bg-card rounded-full"
+						:class='{
 								"text-primary": isActiveRoute(sidebarItem.routeName),
 								"text-foreground": !isActiveRoute(sidebarItem.routeName)
 							}'
-					:href="href"
-					@click="navigate"
-				>
-					<span :class="sidebarItem.icon" />
-					<span class="ml-3">{{ sidebarItem.name }}</span>
-				</a>
-			</router-link>
+						:href="href"
+						@click="navigate"
+					>
+						<span
+							class="text-xl"
+							:class="sidebarItem.icon"
+						/>
+					</a>
+				</router-link>
+			</template>
 		</div>
 	</div>
 </template>

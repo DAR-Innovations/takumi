@@ -48,7 +48,7 @@ export const ROUTES_CONFIG: ExtendedRouteRecord[] = [
 		name: 'events',
 		meta: { layout: APP_LAYOUTS.PRIMARY_LAYOUT, title: 'Events' },
 		component: () => import('@/modules/events/pages/events-page.vue'),
-	},
+},
 	{
 		path: '/profile',
 		name: 'profile',

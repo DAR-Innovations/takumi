@@ -39,6 +39,7 @@ jspm_packages
 .DS_Store
 dist
 dist-ssr
+dev-dist
 coverage
 *.local
 
@@ -60,5 +61,6 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+.DS_Store
 
 *.tsbuildinfo

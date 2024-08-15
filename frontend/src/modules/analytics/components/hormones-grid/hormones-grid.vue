@@ -3,7 +3,7 @@
 		<div
 			v-for="hormone in hormones"
 			:key="hormone.name"
-			class="bg-[#171717] rounded-xl p-4"
+			class="bg-card rounded-xl p-4"
 		>
 			<div class="flex items-center justify-center">
 				<span
@@ -16,7 +16,7 @@
 			<div class="mt-2">
 				<Progress
 					v-model="hormone.value"
-					class="bg-[#242424]"
+					class="bg-card"
 					:indicator-class="cn(hormonesVariants({variant: hormone.key}))"
 				>
 				</Progress>
@@ -26,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import Progress from '@/core/components/ui/progress/Progress.vue'
-import { cn } from '@/core/utils/tailwind.utils'
-import { hormonesVariants, type HormonesVariants } from '@/modules/analytics/components/hormones-grid/hormones-grid.styles'
-import { ref } from 'vue'
+import Progress from '@/core/components/ui/progress/Progress.vue';
+import { cn } from '@/core/utils/tailwind.utils';
+import { hormonesVariants, type HormonesVariants } from '@/modules/analytics/components/hormones-grid/hormones-grid.styles';
+import { ref } from 'vue';
 
 interface Hormones {
 	name: string

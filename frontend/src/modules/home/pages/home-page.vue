@@ -1,17 +1,17 @@
 <template>
 	<days-calendar-scroller />
 
-	<div class="mt-8">
+	<div class="mt-6">
 		<goals-banner />
 	</div>
 
-	<div class="mt-8">
-		<page-section-label class="mb-4">Daily check-in</page-section-label>
+	<div class="mt-6">
+		<page-section-label class="mb-2">Daily check-in</page-section-label>
 		<daily-check-in-container />
 	</div>
 
-	<div class="mt-8">
-		<page-section-label class="mb-4">Habits</page-section-label>
+	<div class="mt-6">
+		<page-section-label class="mb-2">Habits</page-section-label>
 		<habits-container />
 	</div>
 </template>

@@ -1,11 +1,11 @@
 <template>
 	<button
 		v-ripple
-		class="flex justify-between items-center gap-4 bg-[#171717] p-4 rounded-xl"
+		class="flex justify-between items-center gap-4 bg-card p-4 rounded-xl"
 		@click="onCheckBoxClick"
 	>
 		<div class="flex items-center gap-3">
-			<span class="bg-[#242424] p-1 rounded-full text-lg">{{ emoji }}</span>
+			<span class="bg-card p-1 rounded-full text-lg">{{ emoji }}</span>
 			<p class="text-base">{{ title }}</p>
 		</div>
 
@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { Checkbox } from '@/core/components/ui/checkbox'
+import { Checkbox } from '@/core/components/ui/checkbox';
 
 defineProps({
   emoji: { type: String, required: true },
