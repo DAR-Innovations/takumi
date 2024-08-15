@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ThemeToggler from '@/core/components/themes/theme-toggler.vue'
 import PageTitle from '@/core/components/ui/page-title/page-title.vue'
 import { ROUTES } from '@/core/config/routes.config'
 import AppPrimarySidebar from '@/core/layouts/primary/app-primary-sidebar.vue'
@@ -29,6 +30,8 @@ const currentPageTitle = computed(() => route.meta.pageTitle ?? route.meta.title
 								<i class="text-xl pi pi-bell"></i>
 							</button>
 						</router-link>
+
+						<ThemeToggler />
 					</div>
 				</slot>
 			</header>
