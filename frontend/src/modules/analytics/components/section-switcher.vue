@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { AnalyticsSections } from '@/modules/analytics/models/analytics-sections.type'
+import { AnalyticsSections } from '@/modules/analytics/models/analytics-sections.type';
 
 defineProps<{
 	selectedSection: AnalyticsSections

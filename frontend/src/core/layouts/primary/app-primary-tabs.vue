@@ -24,7 +24,6 @@ const isActiveRoute = (routeName: string) => {
 				custom
 			>
 				<a
-					ripple
 					class="flex items-center text-[22px]"
 					:class='{
 								"text-primary": isActiveRoute(item.routeName),

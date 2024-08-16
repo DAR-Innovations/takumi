@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import { sidebarItems } from '@/core/config/sidebar.config'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { primarySidebarItems } from '@/core/config/sidebar.config';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const currentRouteName = computed(() => route.name)
@@ -28,7 +28,7 @@ const isActiveRoute = (routeName: string) => {
 			class="h-full flex flex-col items-center justify-center flex-1 gap-2 overflow-y-auto no-scrollbar"
 		>
 			<template
-				v-for="sidebarItem in sidebarItems"
+				v-for="sidebarItem in primarySidebarItems"
 				:key="sidebarItem.name"
 			>
 				<router-link
@@ -37,7 +37,6 @@ const isActiveRoute = (routeName: string) => {
 					custom
 				>
 					<a
-						ripple
 						class="flex items-center justify-center cursor-pointer w-14 h-14 p-3 bg-card rounded-full"
 						:class='{
 								"text-primary": isActiveRoute(sidebarItem.routeName),

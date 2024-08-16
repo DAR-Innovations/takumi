@@ -13,7 +13,7 @@
 				:stroke-width="12"
 				:inner-stroke-width="12"
 				stroke-linecap="square"
-				inner-stroke-color="#353535"
+				inner-stroke-color="var(--muted)"
 				:start-color="progressColor"
 				:stop-color="progressColor"
 			>
@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import RadialProgress from "vue3-radial-progress";
+import RadialProgress from "vue3-radial-progress"
 
 defineProps({
 	completedSteps: Number,

@@ -1,5 +1,5 @@
 <template>
-	<div class="gap-4 grid grid-cols-2">
+	<div class="gap-2 grid grid-cols-2">
 		<daily-check-in-item
 			:completed-steps="completedWaterSteps"
 			:total-steps="totalWaterSteps"
@@ -16,7 +16,7 @@
 			title="Sleep"
 			emoji="😴"
 			progress-label="hours"
-			progress-color="#EA580B"
+			progress-color="var(--primary)"
 			@add="onSleepAdd"
 			@subtract="onSleepSubtract"
 		/>

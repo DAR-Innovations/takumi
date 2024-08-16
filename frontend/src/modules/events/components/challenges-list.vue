@@ -1,5 +1,5 @@
 <template>
-	<div class="flex items-center gap-4 overflow-x-auto no-scrollbar">
+	<div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
 		<div
 			v-for="challenge in challenges"
 			:key="challenge.title"

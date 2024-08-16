@@ -1,6 +1,5 @@
 <template>
 	<button
-		v-ripple
 		class="flex justify-between items-center gap-4 bg-card p-4 rounded-xl"
 		@click="onCheckBoxClick"
 	>
@@ -17,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { Checkbox } from '@/core/components/ui/checkbox';
+import { Checkbox } from '@/core/components/ui/checkbox'
 
 defineProps({
   emoji: { type: String, required: true },
