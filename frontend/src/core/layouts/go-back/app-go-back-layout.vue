@@ -1,12 +1,12 @@
 <template>
 	<AppPrimaryLayout>
 		<template #header>
-			<div class="w-full relative flex items-center gap-5">
+			<div class="w-full relative flex items-center justify-center">
 				<button
 					@click="$router.back()"
-					class="border border-border px-2 py-1 rounded-xl"
+					class="absolute left-0 -top-1"
 				>
-					<i class="text-xl pi pi-angle-left"></i>
+					<i class="text-3xl pi pi-angle-left"></i>
 				</button>
 				<PageTitle>{{ currentPageTitle }}</PageTitle>
 			</div>

@@ -1,5 +1,5 @@
 <template>
-	<h1 class="font-medium text-xl"><slot></slot></h1>
+	<div>Admin Challenges</div>
 </template>
 
 <script setup lang="ts"></script>

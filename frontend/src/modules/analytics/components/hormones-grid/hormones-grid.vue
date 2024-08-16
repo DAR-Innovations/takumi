@@ -1,5 +1,5 @@
 <template>
-	<div class="grid grid-cols-2 gap-4">
+	<div class="grid grid-cols-2 gap-2">
 		<div
 			v-for="hormone in hormones"
 			:key="hormone.name"

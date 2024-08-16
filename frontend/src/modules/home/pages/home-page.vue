@@ -6,12 +6,12 @@
 	</div>
 
 	<div class="mt-6">
-		<page-section-label class="mb-2">Daily check-in</page-section-label>
+		<page-section-label class="mb-3">Daily check-in</page-section-label>
 		<daily-check-in-container />
 	</div>
 
 	<div class="mt-6">
-		<page-section-label class="mb-2">Habits</page-section-label>
+		<page-section-label class="mb-3">Habits</page-section-label>
 		<habits-container />
 	</div>
 </template>

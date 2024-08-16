@@ -40,15 +40,15 @@
 
 <script setup lang="ts">
 import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue
-} from '@/core/components/ui/select'
-import { ref } from 'vue'
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue
+} from '@/core/components/ui/select';
+import { ref } from 'vue';
 
 const ranges = [{label: "Day", value: "DAY"}, {label: "Week", value: "WEEK"}, {label: "Month", value: "MONTH"}]
 

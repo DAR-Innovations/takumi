@@ -1,6 +1,6 @@
 <template>
 	<div class="flex items-start gap-3 overflow-x-auto no-scrollbar sm:scrollable">
-		<div
+		<button
 			v-for="item in calendarDays"
 			:key="item.id"
 			class="min-w-16"
@@ -28,10 +28,10 @@
 					v-else
 					alt="empty emoji"
 					src="@/core/assets/icons/empty_emoji.svg"
-					class="w-9 h-9"
+					class="w-9 h-9 opacity-30 dark:opacity-100"
 				/>
 			</div>
-		</div>
+		</button>
 	</div>
 </template>
 
