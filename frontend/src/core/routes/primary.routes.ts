@@ -1,7 +1,12 @@
 import { type ExtendedRouteRecord } from '@/core/config/routes.config'
 import { APP_LAYOUTS } from '../types/routes.types'
 
-export type PRIMARY_ROUTES_REGISTRY = 'home' | 'analytics' | 'events' | 'create' | 'notifications'
+export type PRIMARY_ROUTES_REGISTRY =
+	| 'home'
+	| 'analytics'
+	| 'events'
+	| 'habits-create'
+	| 'notifications'
 
 export const PRIMARY_ROUTES_CONFIG: ExtendedRouteRecord[] = [
 	{
@@ -30,9 +35,9 @@ export const PRIMARY_ROUTES_CONFIG: ExtendedRouteRecord[] = [
 	},
 
 	{
-		path: '/create',
-		name: 'create',
-		meta: { layout: APP_LAYOUTS.PRIMARY_LAYOUT, title: 'Create' },
-		component: () => import('@/modules/home/pages/home-page.vue'),
+		path: '/habits/create',
+		name: 'habits-create',
+		meta: { layout: APP_LAYOUTS.NO_TABBAR, title: 'Create habit', pageTitle: 'Add new habit' },
+		component: () => import('@/modules/habits/pages/habits-create-page.vue'),
 	},
 ]

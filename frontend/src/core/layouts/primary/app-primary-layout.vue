@@ -42,9 +42,13 @@ const currentPageTitle = computed(() => route.meta.pageTitle ?? route.meta.title
 				<slot></slot>
 			</div>
 
-			<div class="right-4 bottom-4 left-4 fixed sm:hidden bg-card px-8 py-4 rounded-3xl">
-				<AppPrimaryTabs />
-			</div>
+			<slot name="tabbar">
+				<div
+					class="right-4 bottom-4 left-4 fixed sm:hidden bg-card px-8 py-4 rounded-3xl border border-border"
+				>
+					<AppPrimaryTabs />
+				</div>
+			</slot>
 		</main>
 	</div>
 </template>
