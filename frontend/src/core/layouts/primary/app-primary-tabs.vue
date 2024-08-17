@@ -28,7 +28,7 @@ const isActiveRoute = (routeName: string) => {
 					:class='{
 								"text-primary": isActiveRoute(item.routeName),
 								"text-[#8f8f8f]": !isActiveRoute(item.routeName),
-								"p-2 rounded-xl bg-primary !text-md !text-primary-foreground": item.routeName === ROUTES.CREATE
+								"p-2 rounded-xl bg-primary !text-md !text-primary-foreground": item.routeName === ROUTES.HABITS_CREATE
 							}'
 					:href="href"
 					@click="navigate"

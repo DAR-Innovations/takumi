@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
+import { cn } from '@/core/utils/tailwind.utils'
+import { ChevronRight } from 'lucide-vue-next'
 import {
   DropdownMenuSubTrigger,
-  type DropdownMenuSubTriggerProps,
   useForwardProps,
+  type DropdownMenuSubTriggerProps,
 } from 'radix-vue'
-import { ChevronRightIcon } from '@radix-icons/vue'
-import { cn } from '@/core/utils/tailwind.utils'
+import { computed, type HTMLAttributes } from 'vue'
 
 const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes['class'] }>()
 
@@ -20,14 +20,14 @@ const forwardedProps = useForwardProps(delegatedProps)
 </script>
 
 <template>
-  <DropdownMenuSubTrigger
-    v-bind="forwardedProps"
-    :class="cn(
+	<DropdownMenuSubTrigger
+		v-bind="forwardedProps"
+		:class="cn(
       'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent',
       props.class,
     )"
-  >
-    <slot />
-    <ChevronRightIcon class="ml-auto h-4 w-4" />
-  </DropdownMenuSubTrigger>
+	>
+		<slot />
+		<ChevronRight class="ml-auto h-4 w-4" />
+	</DropdownMenuSubTrigger>
 </template>

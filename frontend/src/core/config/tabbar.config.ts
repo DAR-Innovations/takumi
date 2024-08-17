@@ -9,7 +9,7 @@ interface MenuItem {
 export const tabBarRoutes: MenuItem[] = [
 	{ name: 'Dashboard', routeName: ROUTES.HOME, icon: 'pi pi-home' },
 	{ name: 'Analytics', routeName: ROUTES.ANALYTICS, icon: 'pi pi-chart-bar' },
-	{ name: 'Create', routeName: ROUTES.CREATE, icon: 'pi pi-plus' },
+	{ name: 'Create', routeName: ROUTES.HABITS_CREATE, icon: 'pi pi-plus' },
 	{ name: 'Events', routeName: ROUTES.EVENTS, icon: 'pi pi-compass' },
 	{ name: 'Profile', routeName: ROUTES.PROFILE, icon: 'pi pi-user' },
 ]
