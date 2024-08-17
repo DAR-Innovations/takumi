@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Toaster } from '@/core/components/ui/toast'
 import AppAdminLayout from '@/core/layouts/admin/app-admin-layout.vue'
 import AppDefaultLayout from '@/core/layouts/default/app-default-layout.vue'
 import AppGoBackLayout from '@/core/layouts/go-back/app-go-back-layout.vue'
@@ -11,6 +12,8 @@ useColorMode()
 </script>
 
 <template>
+	<Toaster />
+
 	<AppPrimaryLayout v-if="$route.meta.layout === APP_LAYOUTS.PRIMARY_LAYOUT">
 		<router-view />
 	</AppPrimaryLayout>
