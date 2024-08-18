@@ -4,6 +4,7 @@ import { LANDING_ROUTES_CONFIG, type LANDING_ROUTES_REGISTRY } from '@/core/rout
 import { PRIMARY_ROUTES_CONFIG, type PRIMARY_ROUTES_REGISTRY } from '@/core/routes/primary.routes'
 import { PROFILE_ROUTES_CONFIG, type PROFILE_ROUTES_REGISTRY } from '@/core/routes/profile.routes'
 import type { RouteRecordRaw } from 'vue-router'
+import { ERRORS_ROUTES_CONFIG, type ERRORS_ROUTES_REGISTRY } from '../routes/errors.routes'
 import type { APP_LAYOUTS } from '../types/routes.types'
 
 type ROUTES_REGISTRY =
@@ -12,6 +13,7 @@ type ROUTES_REGISTRY =
 	| PROFILE_ROUTES_REGISTRY
 	| AUTH_ROUTES_REGISTRY
 	| LANDING_ROUTES_REGISTRY
+	| ERRORS_ROUTES_REGISTRY
 
 export type ExtendedRouteRecord = RouteRecordRaw & {
 	meta: {
@@ -30,6 +32,9 @@ export const ROUTES_CONFIG: ExtendedRouteRecord[] = [
 	...PROFILE_ROUTES_CONFIG,
 	...AUTH_ROUTES_CONFIG,
 	...LANDING_ROUTES_CONFIG,
+
+	// Always in the bottom
+	...ERRORS_ROUTES_CONFIG,
 ]
 
 export const ROUTES: TransformedRouteNames = {} as TransformedRouteNames

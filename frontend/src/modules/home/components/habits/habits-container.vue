@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import HabitsItem from '@/modules/home/components/habits/habits-item.vue'
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 
 const habits = ref([
 	{id: 1, title: "Avoid sweets", emoji: "🍰", completed: false},
@@ -33,10 +33,6 @@ const onHabitCheck = (id: number) => {
     habits.value[foundIndex].completed = !previousCheckValue
   }
 };
-
-watchEffect( () => {
-	console.log("Updated")
-})
 </script>
 
 <style scoped></style>

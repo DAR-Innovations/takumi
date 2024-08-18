@@ -31,18 +31,19 @@
 		</template>
 	</div>
 
-	<div class="right-4 bottom-4 left-4 fixed">
-		<button
+	<div class="mt-6">
+		<Button
 			:disabled="!localCategoryId"
 			@click="confirmCategorySelection"
-			class="w-full rounded-xl bg-primary text-primary-foreground p-4 font-bold"
+			class="w-full font-semibold"
 		>
 			Done
-		</button>
+		</Button>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { Button } from '@/core/components/ui/button'
 import { Plus } from 'lucide-vue-next'
 import { ref } from 'vue'
 

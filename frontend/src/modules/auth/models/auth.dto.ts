@@ -14,3 +14,10 @@ export interface SignupDTO {
 	email: string
 	password: string
 }
+
+export interface CurrentUser {
+	id: number
+	fullName: string
+	email: string
+	username: string
+}

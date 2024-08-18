@@ -4,9 +4,9 @@
 			<div class="w-full relative flex items-center justify-center">
 				<button
 					@click="$router.back()"
-					class="absolute left-0 -top-1"
+					class="absolute left-0 top-0 h-full flex items-center justify-center"
 				>
-					<i class="text-3xl pi pi-angle-left"></i>
+					<ChevronLeft :size="28" />
 				</button>
 				<PageTitle>{{ currentPageTitle }}</PageTitle>
 			</div>
@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
 import PageTitle from '@/core/components/ui/page-title/page-title.vue'
+import { ChevronLeft } from 'lucide-vue-next'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import AppPrimaryLayout from "../primary/app-primary-layout.vue"

@@ -1,34 +1,37 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { ROUTES, ROUTES_CONFIG } from './core/config/routes.config'
+import { DEFAULT_TITLE, TITLE_TEMPLATE } from './core/constants/seo.constant'
+import { authService } from './modules/auth/service/auth.service'
+import { useAuthStore } from './modules/auth/stores/auth.store'
 
 export const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
-	scrollBehavior: function (to, _from, savedPosition) {
-		if (savedPosition) {
-			return savedPosition
-		}
-		if (to.hash) {
-			return { el: to.hash, behavior: 'smooth' }
-		} else {
-			window.scrollTo(0, 0)
-		}
+	scrollBehavior() {
+		return { top: 0 }
 	},
 	routes: ROUTES_CONFIG,
 })
 
-export const DEFAULT_TITLE = 'Takumi | Habit Tracking'
-const TITLE_TEMPLATE = (title: string) => `${title} | Takumi`
+router.beforeEach(async (to, _from, next) => {
+	const { isLoggedIn, setCurrentUser } = useAuthStore()
 
-const isLoggedIn = false
-
-router.beforeEach((to, _from, next) => {
 	if (to.meta?.requiresAuth && !isLoggedIn) {
-		next({ name: ROUTES.LANDING, query: { redirect: to.fullPath } })
+		try {
+			const currentUser = await authService.getCurrentUser()
+
+			if (!currentUser) {
+				return next({ name: ROUTES.LANDING })
+			}
+
+			setCurrentUser(currentUser)
+		} catch (error) {
+			return next({ name: ROUTES.INTERNAL_ERROR })
+		}
 	}
 
-	const metaTitle = to.meta.title ? TITLE_TEMPLATE(to.meta.title as string) : DEFAULT_TITLE
+	const metaTitle = to.meta?.title ? TITLE_TEMPLATE(to.meta.title as string) : DEFAULT_TITLE
 	document.title = metaTitle
 
-	next()
+	return next()
 })
