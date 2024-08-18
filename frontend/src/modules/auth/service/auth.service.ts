@@ -1,15 +1,19 @@
-import type { LoginDTO, SignupDTO } from '@/modules/auth/models/auth.dto'
+import type { CurrentUser, LoginDTO, SignupDTO } from '@/modules/auth/models/auth.dto'
 import axios from 'axios'
 
 class AuthService {
 	private readonly baseUrl = '/api/v1/auth'
 
-	login(dto: LoginDTO) {
-		return axios.post(`${this.baseUrl}/login`, dto)
+	async login(dto: LoginDTO) {
+		return axios.post(`${this.baseUrl}/login`, dto).then(res => res.data)
 	}
 
-	signup(dto: SignupDTO) {
-		return axios.post(`${this.baseUrl}/signup`, dto)
+	async signup(dto: SignupDTO) {
+		return axios.post(`${this.baseUrl}/signup`, dto).then(res => res.data)
+	}
+
+	async getCurrentUser() {
+		return axios.get<CurrentUser>(`${this.baseUrl}/current`).then(res => res.data)
 	}
 }
 

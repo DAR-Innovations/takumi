@@ -60,7 +60,7 @@
 			class="w-full"
 			type="submit"
 			@click="onSubmit"
-			:disabled="!meta.valid ?? isPending"
+			:disabled="!meta.valid"
 		>
 			Login
 		</Button>
@@ -92,7 +92,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const { toast } = useToast()
 
-const {isPending, mutate} = useMutation({
+const {mutate} = useMutation({
 		mutationFn: (dto: LoginDTO) => authService.login(dto),
 		onSuccess: () => {
 			toast({title: 'You successfully logged in', variant: 'default'})
@@ -106,6 +106,7 @@ const {isPending, mutate} = useMutation({
 const {meta, handleSubmit} = useForm({
   validationSchema: loginFormSchema,
 })
+
 
 const onSubmit = handleSubmit((formData) => {
   mutate(formData)

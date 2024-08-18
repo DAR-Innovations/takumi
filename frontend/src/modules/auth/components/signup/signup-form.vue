@@ -158,7 +158,7 @@
 			class="w-full"
 			type="submit"
 			@click="onSubmit"
-			:disabled="!meta.valid ?? isPending"
+			:disabled="!meta.valid"
 		>
 			Signup
 		</Button>
@@ -199,7 +199,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const {isPending, mutate} = useMutation({
+const {mutate} = useMutation({
 		mutationFn: (dto: SignupDTO) => authService.signup(dto),
 		onSuccess: () => {
 			toast({title: 'You successfully signed up', variant: 'default'})
@@ -213,6 +213,7 @@ const {isPending, mutate} = useMutation({
 const {meta, handleSubmit} = useForm({
   validationSchema: signupFormSchema,
 })
+
 
 const onSubmit = handleSubmit((formData) => {
   mutate(formData)

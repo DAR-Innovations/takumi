@@ -44,17 +44,18 @@
 		</button>
 	</div>
 
-	<div class="right-4 bottom-4 left-4 fixed">
-		<button
+	<div class="mt-6">
+		<Button
 			@click="onCreate"
-			class="w-full rounded-xl bg-primary text-primary-foreground p-4 font-bold"
+			class="w-full font-semibold"
 		>
 			Create new
-		</button>
+		</Button>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { Button } from '@/core/components/ui/button'
 import { Textarea } from '@/core/components/ui/textarea'
 import HabitsColorPicker from '@/modules/habits/components/habits-color-picker.vue'
 import HabitsEmojiPicker from '@/modules/habits/components/habits-emoji-picker.vue'
