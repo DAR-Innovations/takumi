@@ -42,7 +42,7 @@ func (s *Service) Login(c *gin.Context, req *types.LoginReq) (*types.CurrentUser
 	}
 
 	return &types.CurrentUser{
-		ID:       found.UserID,
+		ID:       found.ID,
 		FullName: found.FirstName + found.LastName,
 		Username: found.Username,
 		Email:    found.Email,
@@ -85,7 +85,7 @@ func (s *Service) Signup(c *gin.Context, req *types.SignupReq) (*types.CurrentUs
 		return nil, errors.New("apologies for inconvenience, internal error occurred")
 	}
 	return &types.CurrentUser{
-		ID:       created.UserID,
+		ID:       created.ID,
 		FullName: created.FirstName + created.LastName,
 		Username: created.Username,
 		Email:    created.Email,

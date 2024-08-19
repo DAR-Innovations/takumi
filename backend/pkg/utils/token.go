@@ -12,7 +12,7 @@ func GenerateToken(user types.User, jwtKey string) (string, error) {
 	expirationTime := time.Now().Add(time.Hour * 24)
 
 	claims := &types.Claims{
-		ID:       user.UserID,
+		ID:       user.ID,
 		Email:    user.Email,
 		Username: user.Username,
 		StandardClaims: jwt.StandardClaims{
