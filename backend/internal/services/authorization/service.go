@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"takumi/internal/config"
 	"takumi/internal/database"
-	"takumi/internal/middleware"
 	"takumi/internal/services/authorization/types"
 	"takumi/pkg/utils"
 
@@ -24,39 +23,44 @@ func InitAuthService(handler database.DBHandler) (*Service, error) {
 	return service, nil
 }
 
-func (s *Service) Login(c *gin.Context, req *types.LoginReq) error {
+func (s *Service) Login(c *gin.Context, req *types.LoginReq) (*types.CurrentUser, error) {
 	found, err := GetUserByUsernameOrEmail(req.Login, s.Handler)
 	if err != nil && found == nil {
 		c.AbortWithError(http.StatusNotFound, err)
-		return errors.New("such user was not found")
+		return nil, errors.New("such user was not found")
 	}
 
 	if !utils.ComparePasswords(found.Password, req.Password) {
 		c.AbortWithError(http.StatusUnauthorized, errors.New("incorrect password"))
-		return errors.New("incorrect password")
+		return nil, errors.New("incorrect password")
 	}
 
 	token, err := utils.GenerateToken(*found, config.JWTSecretKey)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
-		return errors.New("apologies for inconvenience, internal error occurred")
+		return nil, errors.New("apologies for inconvenience, internal error occurred")
 	}
 
-	middleware.SetCookieHandler(c, token)
-	return nil
+	return &types.CurrentUser{
+		ID:       found.ID,
+		FullName: found.FirstName + found.LastName,
+		Username: found.Username,
+		Email:    found.Email,
+		Token:    token,
+	}, nil
 }
 
-func (s *Service) Signup(c *gin.Context, req *types.SignupReq) error {
+func (s *Service) Signup(c *gin.Context, req *types.SignupReq) (*types.CurrentUser, error) {
 	found, err := GetUserByUsernameOrEmail(req.Username, s.Handler)
 	if err == nil && found != nil {
 		c.AbortWithError(http.StatusBadRequest, errors.New("username is taken"))
-		return errors.New("username is taken")
+		return nil, errors.New("username is taken")
 	}
 
 	found, err = GetUserByUsernameOrEmail(req.Email, s.Handler)
 	if err == nil && found != nil {
 		c.AbortWithError(http.StatusBadRequest, errors.New("user with this email already exists"))
-		return errors.New("user with this email already exists")
+		return nil, errors.New("user with this email already exists")
 	}
 
 	newUser := types.User{
@@ -72,15 +76,19 @@ func (s *Service) Signup(c *gin.Context, req *types.SignupReq) error {
 	created, err := CreateUser(&newUser, &s.Handler)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
-		return errors.New("could not create an account")
+		return nil, errors.New("could not create an account")
 	}
 
 	token, err := utils.GenerateToken(*created, config.JWTSecretKey)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
-		return errors.New("apologies for inconvenience, internal error occurred")
+		return nil, errors.New("apologies for inconvenience, internal error occurred")
 	}
-
-	middleware.SetCookieHandler(c, token)
-	return nil
+	return &types.CurrentUser{
+		ID:       created.ID,
+		FullName: created.FirstName + created.LastName,
+		Username: created.Username,
+		Email:    created.Email,
+		Token:    token,
+	}, nil
 }
