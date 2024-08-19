@@ -35,7 +35,8 @@ func (s *Service) Login(c *gin.Context, req *types.LoginReq) (*types.CurrentUser
 		return nil, errors.New("incorrect password")
 	}
 
-	token, err := utils.GenerateToken(*found, config.JWTSecretKey)
+	cfg := config.GetConfig()
+	token, err := utils.GenerateToken(*found, cfg.JWTSecretKey)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return nil, errors.New("apologies for inconvenience, internal error occurred")
@@ -79,7 +80,8 @@ func (s *Service) Signup(c *gin.Context, req *types.SignupReq) (*types.CurrentUs
 		return nil, errors.New("could not create an account")
 	}
 
-	token, err := utils.GenerateToken(*created, config.JWTSecretKey)
+	cfg := config.GetConfig()
+	token, err := utils.GenerateToken(*created, cfg.JWTSecretKey)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return nil, errors.New("apologies for inconvenience, internal error occurred")
