@@ -1,9 +1,10 @@
 package authorization
 
 import (
-	"log"
 	"net/http"
+	"takumi/internal/middleware"
 	"takumi/internal/services/authorization/types"
+	"takumi/pkg/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,33 +22,33 @@ func NewHandler(service *Service) *Handler {
 func (h *Handler) LoginHandler(c *gin.Context) {
 	req := &types.LoginReq{}
 	if err := c.ShouldBindJSON(req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		utils.SendMessageWithStatus(c, "ERROR: Invalid request body", http.StatusBadRequest)
 		return
 	}
 
-	err := h.Service.Login(c, req)
+	currentUser, err := h.Service.Login(c, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.SendMessageWithStatus(c, "ERROR:"+" "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	c.JSON(http.StatusOK, "Success!")
+	middleware.SetCookieHandler(c, currentUser.Token)
+	utils.SendSuccessJSON(c, currentUser)
 }
 
 func (h *Handler) SignUpHandler(c *gin.Context) {
 	req := &types.SignupReq{}
 	if err := c.ShouldBindJSON(req); err != nil {
-		log.Printf("Request body: %v", req) // Log request body
-		log.Printf("Bind error: %v", err)   // Log binding error
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		utils.SendMessageWithStatus(c, "ERROR: Invalid request body", http.StatusBadRequest)
 		return
 	}
 
-	err := h.Service.Signup(c, req)
+	currentUser, err := h.Service.Signup(c, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		utils.SendMessageWithStatus(c, "ERROR:"+" "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	c.JSON(http.StatusOK, "Success!")
+	middleware.SetCookieHandler(c, currentUser.Token)
+	utils.SendSuccessJSON(c, currentUser)
 }
