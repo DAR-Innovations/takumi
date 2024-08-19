@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"takumi/internal/services/authorization"
+	"takumi/internal/modules/authorization"
 
 	"github.com/gin-gonic/gin"
 )

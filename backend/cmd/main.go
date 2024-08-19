@@ -4,8 +4,8 @@ import (
 	"log"
 	"takumi/internal/config"
 	"takumi/internal/database"
+	"takumi/internal/modules/authorization"
 	"takumi/internal/routes"
-	"takumi/internal/services/authorization"
 	"time"
 
 	"github.com/gin-contrib/cors"
