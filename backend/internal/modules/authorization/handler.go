@@ -32,12 +32,13 @@ func (h *Handler) LoginHandler(c *gin.Context) {
 		return
 	}
 
+	cfg := config.GetConfig()
 	utils.SetCookieHandler(c, utils.CookieSettings{
 		Name:     "token",
 		Data:     currentUser.Token,
 		MaxAge:   3600 * 12,
 		Path:     "/",
-		Host:     config.HOST,
+		Host:     cfg.FrontendUrl,
 		Secure:   true,
 		HttpOnly: true,
 	})
@@ -57,12 +58,13 @@ func (h *Handler) SignUpHandler(c *gin.Context) {
 		return
 	}
 
+	cfg := config.GetConfig()
 	utils.SetCookieHandler(c, utils.CookieSettings{
 		Name:     "token",
 		Data:     currentUser.Token,
 		MaxAge:   3600 * 12,
 		Path:     "/",
-		Host:     config.HOST,
+		Host:     cfg.FrontendUrl,
 		Secure:   true,
 		HttpOnly: true,
 	})
@@ -76,7 +78,8 @@ func (h *Handler) GetCurrentUser(c *gin.Context) {
 		return
 	}
 
-	claims, err := utils.ParseToken(*token, config.JWTSecretKey)
+	cfg := config.GetConfig()
+	claims, err := utils.ParseToken(*token, cfg.JWTSecretKey)
 	if err != nil {
 		utils.SendMessageWithStatus(c, err.Error(), http.StatusInternalServerError)
 		return
