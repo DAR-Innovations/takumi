@@ -10,18 +10,21 @@ type TakumiRouter struct {
 	Prefix  string
 	Version string
 	Engine  *gin.Engine
+	Routes  *gin.RouterGroup
 }
 
 func NewTakumiRouter(engine *gin.Engine, prefix string, version string) *TakumiRouter {
+	router := engine.Group(prefix + version)
 	return &TakumiRouter{
 		Prefix:  prefix,
 		Version: version,
 		Engine:  engine,
+		Routes:  router,
 	}
 }
 
 func (tr *TakumiRouter) RegisterAuthRoutes(handler *authorization.Handler) {
-	router := tr.Engine.Group("/auth")
+	router := tr.Routes.Group("/auth")
 
 	router.POST("/login", handler.LoginHandler)
 	router.POST("/signup", handler.SignUpHandler)
