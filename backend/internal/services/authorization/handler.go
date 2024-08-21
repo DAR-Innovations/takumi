@@ -2,7 +2,7 @@ package authorization
 
 import (
 	"net/http"
-	"takumi/internal/middleware"
+	"takumi/internal/config"
 	"takumi/internal/services/authorization/types"
 	"takumi/pkg/utils"
 
@@ -32,7 +32,15 @@ func (h *Handler) LoginHandler(c *gin.Context) {
 		return
 	}
 
-	middleware.SetCookieHandler(c, currentUser.Token)
+	utils.SetCookieHandler(c, utils.CookieSettings{
+		Name:     "token",
+		Data:     currentUser.Token,
+		MaxAge:   3600 * 12,
+		Path:     "/",
+		Host:     config.HOST,
+		Secure:   true,
+		HttpOnly: true,
+	})
 	utils.SendSuccessJSON(c, currentUser)
 }
 
@@ -49,6 +57,29 @@ func (h *Handler) SignUpHandler(c *gin.Context) {
 		return
 	}
 
-	middleware.SetCookieHandler(c, currentUser.Token)
+	utils.SetCookieHandler(c, utils.CookieSettings{
+		Name:     "token",
+		Data:     currentUser.Token,
+		MaxAge:   3600 * 12,
+		Path:     "/",
+		Host:     config.HOST,
+		Secure:   true,
+		HttpOnly: true,
+	})
 	utils.SendSuccessJSON(c, currentUser)
+}
+
+func (h *Handler) GetCurrentUser(c *gin.Context) {
+	token, err := utils.GetCookieHandler(c, utils.CookieSettings{Name: "token"})
+	if err != nil {
+		utils.SendMessageWithStatus(c, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	claims, err := utils.ParseToken(*token, config.JWTSecretKey)
+	if err != nil {
+		utils.SendMessageWithStatus(c, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	utils.SendSuccessJSON(c, claims)
 }

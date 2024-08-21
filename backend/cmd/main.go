@@ -2,12 +2,12 @@ package main
 
 import (
 	"log"
+	"takumi/api"
 	"takumi/internal/config"
 	"takumi/internal/database"
 	"takumi/internal/routes"
 	"takumi/internal/services/authorization"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,11 +15,8 @@ func main() {
 	dbHandler := database.InitDB(config.DBUrl)
 
 	app := gin.Default()
-	app.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"*"},
-		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
-		AllowHeaders: []string{"Origin", "Content-Type", "Accept", "Authorization"},
-	}))
+	app.Use(api.Config())
+	router := routes.NewTakumiRouter(app, "/api", "/v1")
 
 	authService, err := authorization.InitAuthService(dbHandler)
 	if err != nil {
@@ -27,7 +24,7 @@ func main() {
 		return
 	}
 	authHandlers := authorization.NewHandler(authService)
-	routes.RegisterAuthRoutes(app, authHandlers)
+	router.RegisterAuthRoutes(authHandlers)
 
 	err = app.Run(config.PORT)
 	if err != nil {

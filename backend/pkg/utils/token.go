@@ -5,7 +5,7 @@ import (
 	"takumi/internal/services/authorization/types"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func GenerateToken(user types.User, jwtKey string) (string, error) {
@@ -13,10 +13,11 @@ func GenerateToken(user types.User, jwtKey string) (string, error) {
 
 	claims := &types.Claims{
 		ID:       user.ID,
-		Email:    user.Email,
+		FullName: user.FirstName + " " + user.LastName,
 		Username: user.Username,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expirationTime.Unix(),
+		Email:    user.Email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
 	}
 
