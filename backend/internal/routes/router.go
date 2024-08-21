@@ -9,7 +9,6 @@ import (
 type TakumiRouter struct {
 	Prefix  string
 	Version string
-	Engine  *gin.Engine
 	Routes  *gin.RouterGroup
 }
 
@@ -18,7 +17,6 @@ func NewTakumiRouter(engine *gin.Engine, prefix string, version string) *TakumiR
 	return &TakumiRouter{
 		Prefix:  prefix,
 		Version: version,
-		Engine:  engine,
 		Routes:  router,
 	}
 }
