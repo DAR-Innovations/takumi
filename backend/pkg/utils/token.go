@@ -2,7 +2,7 @@ package utils
 
 import (
 	"errors"
-	"takumi/internal/services/authorization/types"
+	"takumi/internal/modules/authorization/types"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"

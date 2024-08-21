@@ -5,8 +5,8 @@ import (
 	"takumi/api"
 	"takumi/internal/config"
 	"takumi/internal/database"
+	"takumi/internal/modules/authorization"
 	"takumi/internal/routes"
-	"takumi/internal/services/authorization"
 
 	"github.com/gin-gonic/gin"
 )

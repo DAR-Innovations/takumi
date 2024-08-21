@@ -3,7 +3,7 @@ package authorization
 import (
 	"net/http"
 	"takumi/internal/config"
-	"takumi/internal/services/authorization/types"
+	"takumi/internal/modules/authorization/types"
 	"takumi/pkg/utils"
 
 	"github.com/gin-gonic/gin"

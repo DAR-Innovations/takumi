@@ -4,7 +4,7 @@ import (
 	"errors"
 	"regexp"
 	"takumi/internal/database"
-	"takumi/internal/services/authorization/types"
+	"takumi/internal/modules/authorization/types"
 	"takumi/pkg/utils"
 	"time"
 
