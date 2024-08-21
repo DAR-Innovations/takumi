@@ -3,7 +3,7 @@ package types
 import (
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 type LoginReq struct {
@@ -23,10 +23,11 @@ type SignupReq struct {
 
 type Claims struct {
 	ID       int    `json:"id"`
+	FullName string `json:"fullName"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
 
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 type CurrentUser struct {

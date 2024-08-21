@@ -2,24 +2,24 @@ package main
 
 import (
 	"log"
+	"takumi/api"
 	"takumi/internal/config"
 	"takumi/internal/database"
+	"takumi/internal/modules/authorization"
 	"takumi/internal/routes"
-	"takumi/internal/services/authorization"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	dbHandler := database.InitDB(config.DBUrl)
+	cfg, err := config.LoadConfig(".env")
+	if err != nil {
+		log.Fatalf("failed to load config: %v", err)
+	}
+	dbHandler := database.InitDB(cfg.DBSource)
 
-	app := gin.Default()
-	app.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"*"},
-		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
-		AllowHeaders: []string{"Origin", "Content-Type", "Accept", "Authorization"},
-	}))
+	app := setupGin(cfg)
+	router := routes.NewTakumiRouter(app, "/api", "/v1")
 
 	authService, err := authorization.InitAuthService(dbHandler)
 	if err != nil {
@@ -27,10 +27,29 @@ func main() {
 		return
 	}
 	authHandlers := authorization.NewHandler(authService)
-	routes.RegisterAuthRoutes(app, authHandlers)
+	router.RegisterAuthRoutes(authHandlers)
 
-	err = app.Run(config.PORT)
+	err = app.Run(":" + cfg.Port)
 	if err != nil {
 		log.Fatal("error running server: ", err)
 	}
+}
+
+func setupGin(cfg *config.Config) *gin.Engine {
+	if cfg.Env == "dev" || cfg.Env == "development" {
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
+	app := gin.New()
+	app.Use(api.Config())
+
+	if gin.Mode() == gin.DebugMode {
+		app.Use(gin.Logger())
+	}
+
+	app.Use(gin.Recovery())
+
+	return app
 }
