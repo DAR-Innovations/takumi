@@ -23,21 +23,8 @@ func main() {
 	app.Static("/uploads", "./uploads")
 	router := routes.NewTakumiRouter(app, "/api", "/v1")
 
-	authService, err := authorization.InitAuthService(dbHandler)
-	if err != nil {
-		log.Fatal("error initializing authorization service: ", err)
-		return
-	}
-	authHandlers := authorization.NewHandler(authService)
-	router.RegisterAuthRoutes(authHandlers)
-
-	userService, err := user.InitUserService(dbHandler)
-	if err != nil {
-		log.Fatal("error initializing user service: ", err)
-		return
-	}
-	userHandlers := user.NewHandler(userService)
-	router.RegisterUserRoutes(userHandlers)
+	InitializeModule(dbHandler, authorization.InitAuthService, authorization.NewHandler, router.RegisterAuthRoutes)
+	InitializeModule(dbHandler, user.InitUserService, user.NewHandler, router.RegisterUserRoutes)
 
 	err = app.Run(":" + cfg.Port)
 	if err != nil {
@@ -62,4 +49,23 @@ func setupGin(cfg *config.Config) *gin.Engine {
 	app.Use(gin.Recovery())
 
 	return app
+}
+
+type Service interface{}
+type Handler interface{}
+
+func InitializeModule[T Service, H Handler](
+	dbHandler database.DBHandler,
+	initService func(dbHandler database.DBHandler) (T, error),
+	createHandler func(T) H,
+	registerRoutes func(H)) {
+	service, err := initService(dbHandler)
+	if err != nil {
+		log.Fatalf("error initializing service: %v", err)
+		return
+	}
+
+	handler := createHandler(service)
+
+	registerRoutes(handler)
 }
