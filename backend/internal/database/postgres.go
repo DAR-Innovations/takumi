@@ -2,7 +2,7 @@ package database
 
 import (
 	"log"
-	"takumi/internal/modules/authorization/types"
+	"takumi/internal/modules/user/types"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

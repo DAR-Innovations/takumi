@@ -6,6 +6,7 @@ import (
 	"takumi/internal/config"
 	"takumi/internal/database"
 	"takumi/internal/modules/authorization"
+	"takumi/internal/modules/user"
 	"takumi/internal/routes"
 
 	"github.com/gin-gonic/gin"
@@ -29,6 +30,14 @@ func main() {
 	}
 	authHandlers := authorization.NewHandler(authService)
 	router.RegisterAuthRoutes(authHandlers)
+
+	userService, err := user.InitUserService(dbHandler)
+	if err != nil {
+		log.Fatal("error initializing user service: ", err)
+		return
+	}
+	userHandlers := user.NewHandler(userService)
+	router.RegisterUserRoutes(userHandlers)
 
 	err = app.Run(":" + cfg.Port)
 	if err != nil {

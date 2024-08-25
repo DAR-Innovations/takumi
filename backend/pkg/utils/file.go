@@ -7,8 +7,10 @@ import (
 	"path/filepath"
 )
 
+const FilesDir = "uploads/"
+
 func DeleteFile(branch, filePath string) error {
-	fullPath := filepath.Join("uploads/", branch, filePath)
+	fullPath := filepath.Join(FilesDir, branch, filePath)
 
 	if _, err := os.Stat(fullPath); err == nil {
 		if err := os.Remove(fullPath); err != nil {
@@ -24,7 +26,7 @@ func DeleteFile(branch, filePath string) error {
 }
 
 func SaveFile(file io.Reader, branch, filePath string) error {
-	fullPath := filepath.Join("uploads/", branch)
+	fullPath := filepath.Join(FilesDir, branch)
 	if err := os.MkdirAll(fullPath, os.ModePerm); err != nil {
 		return fmt.Errorf("failed to create directory %s: %w", fullPath, err)
 	}
