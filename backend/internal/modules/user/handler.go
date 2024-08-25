@@ -1,8 +1,10 @@
 package user
 
 import (
-	"io"
+	"fmt"
+	"log"
 	"net/http"
+	"path/filepath"
 	"strconv"
 	"takumi/internal/modules/user/types"
 	"takumi/pkg/utils"
@@ -68,49 +70,69 @@ func (h *Handler) UpdateUserParamsHandler(c *gin.Context) {
 	utils.SendSuccessJSON(c, updatedUser)
 }
 
-func (h *Handler) UploadProfilePictureHandler(c *gin.Context) {
-	userID, _ := strconv.Atoi(c.Param("userID"))
-	file, _, err := c.Request.FormFile("profile_picture")
+func (h *Handler) UpdateProfilePictureHandler(c *gin.Context) {
+	userIDParam := c.Param("id")
+	userID, err := strconv.Atoi(userIDParam)
 	if err != nil {
-		utils.SendMessageWithStatus(c, "ERROR: No file uploaded", http.StatusBadRequest)
+		utils.SendMessageWithStatus(c, "ERROR: Invalid user ID", http.StatusBadRequest)
+		return
+	}
+
+	file, _, err := c.Request.FormFile("profilePicture")
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: File upload failed", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 
-	imageData, err := io.ReadAll(file)
-	if err != nil {
-		utils.SendMessageWithStatus(c, "ERROR: Could not read file", http.StatusInternalServerError)
+	fileName := fmt.Sprintf("user_%d_profile_pic.jpg", userID)
+	if err := utils.SaveFile(file, "profile-pictures", fileName); err != nil {
+		log.Printf("Failed to save profile picture for user %d: %v", userID, err)
+		utils.SendMessageWithStatus(c, "ERROR: Could not save profile picture", http.StatusInternalServerError)
 		return
 	}
 
-	picture, err := h.Service.UploadProfilePicture(c, userID, imageData)
+	profilePictureURL := filepath.Join("profile-pictures", fileName)
+	updatedUser, err := h.Service.UpdateProfilePicture(c, userID, profilePictureURL)
 	if err != nil {
-		utils.SendMessageWithStatus(c, "ERROR: Could not upload profile picture", http.StatusInternalServerError)
+		log.Printf("Error updating profile picture for user %d: %v", userID, err)
+		utils.SendMessageWithStatus(c, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	utils.SendSuccessJSON(c, picture)
+	utils.SendSuccessJSON(c, updatedUser)
 }
 
-func (h *Handler) GetProfilePictureHandler(c *gin.Context) {
-	userID, _ := strconv.Atoi(c.Param("userID"))
-	picture, err := h.Service.GetProfilePicture(c, userID)
+func (h *Handler) GetProfilePictureByUserID(c *gin.Context) {
+	userIDParam := c.Param("id")
+	userID, err := strconv.Atoi(userIDParam)
 	if err != nil {
-		utils.SendMessageWithStatus(c, "ERROR: "+err.Error(), http.StatusNotFound)
+		utils.SendMessageWithStatus(c, "ERROR: Invalid user ID", http.StatusBadRequest)
 		return
 	}
 
-	c.Header("Content-Type", "image/jpeg")
-	c.Writer.Write(picture.ImageData)
-}
-
-func (h *Handler) DeleteProfilePictureHandler(c *gin.Context) {
-	userID, _ := strconv.Atoi(c.Param("userID"))
-	err := h.Service.DeleteProfilePicture(c, userID)
+	profilePictureURL, err := h.Service.GetProfilePictureByUserID(userID)
 	if err != nil {
 		utils.SendMessageWithStatus(c, "ERROR: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	utils.SendMessageWithStatus(c, "Profile picture deleted successfully", http.StatusOK)
+	utils.SendSuccessJSON(c, gin.H{"profilePictureURL": profilePictureURL})
+}
+
+func (h *Handler) DeleteProfilePictureHandler(c *gin.Context) {
+	userIDParam := c.Param("id")
+	userID, err := strconv.Atoi(userIDParam)
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: Invalid user ID", http.StatusBadRequest)
+		return
+	}
+
+	deletedUser, err := h.Service.DeleteProfilePicture(c, userID)
+	if err != nil {
+		utils.SendMessageWithStatus(c, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessJSON(c, deletedUser)
 }

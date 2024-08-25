@@ -2,8 +2,10 @@ package user
 
 import (
 	"errors"
+	"log"
 	"takumi/internal/database"
 	"takumi/internal/modules/user/types"
+	"takumi/pkg/utils"
 
 	"gorm.io/gorm"
 )
@@ -44,46 +46,57 @@ func UpdateUserParams(update types.User, handler database.DBHandler) (*types.Use
 	return &user, nil
 }
 
-func UpsertProfilePicture(picture *types.ProfilePicture, handler database.DBHandler) (*types.ProfilePicture, error) {
-	existing := types.ProfilePicture{}
-	err := handler.DB.Where("user_id = ?", picture.UserID).First(&existing).Error
+func UpdateUserProfilePicture(userID int, profilePictureURL string, handler database.DBHandler) (*types.User, error) {
+	user := types.User{}
+	tx := handler.DB.Begin()
 
-	if err != nil && err != gorm.ErrRecordNotFound {
+	if err := tx.First(&user, userID).Error; err != nil {
+		tx.Rollback()
 		return nil, err
 	}
 
-	if existing.ID != 0 {
-		existing.ImageData = picture.ImageData
-		err = handler.DB.Save(&existing).Error
-		if err != nil {
+	if user.ProfilePicture != "" && user.ProfilePicture != "default.jpg" {
+		if err := utils.DeleteFile("profile-pictures", user.ProfilePicture); err != nil {
+			log.Printf("Failed to delete: %s, error: %v", user.ProfilePicture, err)
+			tx.Rollback()
 			return nil, err
 		}
-		return &existing, nil
-	} else {
-		err = handler.DB.Create(picture).Error
-		if err != nil {
-			return nil, err
-		}
-		return picture, nil
 	}
-}
 
-func GetProfilePictureByUserID(userID int, handler database.DBHandler) (*types.ProfilePicture, error) {
-	var picture types.ProfilePicture
-	err := handler.DB.Where("user_id = ?", userID).First(&picture).Error
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return nil, errors.New("profile picture not found")
-		}
+	user.ProfilePicture = profilePictureURL
+	if err := tx.Save(&user).Error; err != nil {
+		tx.Rollback()
 		return nil, err
 	}
-	return &picture, nil
+
+	tx.Commit()
+	return &user, nil
 }
 
-func DeleteProfilePicture(userID int, handler database.DBHandler) error {
-	err := handler.DB.Where("user_id = ?", userID).Delete(&types.ProfilePicture{}).Error
-	if err != nil {
-		return err
+func GetProfilePictureByUserID(userID int, handler database.DBHandler) (string, error) {
+	user := types.User{}
+
+	if err := handler.DB.Select("profile_picture").First(&user, userID).Error; err != nil {
+		return "", err
 	}
-	return nil
+
+	if user.ProfilePicture == "" {
+		return "", errors.New("no profile picture found for this user")
+	}
+
+	return user.ProfilePicture, nil
+}
+
+func DeleteUserProfilePicture(userID int, handler database.DBHandler) (*types.User, error) {
+	user := types.User{}
+	if err := handler.DB.First(&user, userID).Error; err != nil {
+		return nil, err
+	}
+
+	user.ProfilePicture = ""
+	if err := handler.DB.Save(&user).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }

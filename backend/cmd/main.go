@@ -19,6 +19,7 @@ func main() {
 	dbHandler := database.InitDB(cfg.DBSource)
 
 	app := setupGin(cfg)
+	app.Static("/uploads", "./uploads")
 	router := routes.NewTakumiRouter(app, "/api", "/v1")
 
 	authService, err := authorization.InitAuthService(dbHandler)
