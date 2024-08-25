@@ -58,3 +58,37 @@ func (s *Service) UpdateUserParams(c *gin.Context, update types.User) (*types.Us
 	}
 	return user, nil
 }
+
+func (s *Service) UploadProfilePicture(c *gin.Context, userID int, imageData []byte) (*types.ProfilePicture, error) {
+	picture := types.ProfilePicture{
+		UserID:    userID,
+		ImageData: imageData,
+	}
+
+	savedPicture, err := UpsertProfilePicture(&picture, s.Handler)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return nil, errors.New("could not upload profile picture")
+	}
+
+	return savedPicture, nil
+}
+
+func (s *Service) GetProfilePicture(c *gin.Context, userID int) (*types.ProfilePicture, error) {
+	picture, err := GetProfilePictureByUserID(userID, s.Handler)
+	if err != nil {
+		c.AbortWithError(http.StatusNotFound, err)
+		return nil, errors.New("profile picture not found")
+	}
+
+	return picture, nil
+}
+
+func (s *Service) DeleteProfilePicture(c *gin.Context, userID int) error {
+	err := DeleteProfilePicture(userID, s.Handler)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return errors.New("could not delete profile picture")
+	}
+	return nil
+}

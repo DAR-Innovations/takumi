@@ -43,3 +43,47 @@ func UpdateUserParams(update types.User, handler database.DBHandler) (*types.Use
 
 	return &user, nil
 }
+
+func UpsertProfilePicture(picture *types.ProfilePicture, handler database.DBHandler) (*types.ProfilePicture, error) {
+	existing := types.ProfilePicture{}
+	err := handler.DB.Where("user_id = ?", picture.UserID).First(&existing).Error
+
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+
+	if existing.ID != 0 {
+		existing.ImageData = picture.ImageData
+		err = handler.DB.Save(&existing).Error
+		if err != nil {
+			return nil, err
+		}
+		return &existing, nil
+	} else {
+		err = handler.DB.Create(picture).Error
+		if err != nil {
+			return nil, err
+		}
+		return picture, nil
+	}
+}
+
+func GetProfilePictureByUserID(userID int, handler database.DBHandler) (*types.ProfilePicture, error) {
+	var picture types.ProfilePicture
+	err := handler.DB.Where("user_id = ?", userID).First(&picture).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, errors.New("profile picture not found")
+		}
+		return nil, err
+	}
+	return &picture, nil
+}
+
+func DeleteProfilePicture(userID int, handler database.DBHandler) error {
+	err := handler.DB.Where("user_id = ?", userID).Delete(&types.ProfilePicture{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}

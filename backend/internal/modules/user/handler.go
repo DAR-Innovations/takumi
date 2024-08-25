@@ -1,6 +1,7 @@
 package user
 
 import (
+	"io"
 	"net/http"
 	"strconv"
 	"takumi/internal/modules/user/types"
@@ -65,4 +66,51 @@ func (h *Handler) UpdateUserParamsHandler(c *gin.Context) {
 	}
 
 	utils.SendSuccessJSON(c, updatedUser)
+}
+
+func (h *Handler) UploadProfilePictureHandler(c *gin.Context) {
+	userID, _ := strconv.Atoi(c.Param("userID"))
+	file, _, err := c.Request.FormFile("profile_picture")
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: No file uploaded", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	imageData, err := io.ReadAll(file)
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: Could not read file", http.StatusInternalServerError)
+		return
+	}
+
+	picture, err := h.Service.UploadProfilePicture(c, userID, imageData)
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: Could not upload profile picture", http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessJSON(c, picture)
+}
+
+func (h *Handler) GetProfilePictureHandler(c *gin.Context) {
+	userID, _ := strconv.Atoi(c.Param("userID"))
+	picture, err := h.Service.GetProfilePicture(c, userID)
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: "+err.Error(), http.StatusNotFound)
+		return
+	}
+
+	c.Header("Content-Type", "image/jpeg")
+	c.Writer.Write(picture.ImageData)
+}
+
+func (h *Handler) DeleteProfilePictureHandler(c *gin.Context) {
+	userID, _ := strconv.Atoi(c.Param("userID"))
+	err := h.Service.DeleteProfilePicture(c, userID)
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendMessageWithStatus(c, "Profile picture deleted successfully", http.StatusOK)
 }
