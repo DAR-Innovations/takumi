@@ -2,6 +2,7 @@ package routes
 
 import (
 	"takumi/internal/modules/authorization"
+	"takumi/internal/modules/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,4 +28,16 @@ func (tr *TakumiRouter) RegisterAuthRoutes(handler *authorization.Handler) {
 	router.POST("/login", handler.LoginHandler)
 	router.POST("/signup", handler.SignUpHandler)
 	router.GET("/current-user", handler.GetCurrentUser)
+}
+
+func (tr *TakumiRouter) RegisterUserRoutes(handler *user.Handler) {
+	router := tr.Routes.Group("/user")
+
+	router.GET("/:id", handler.GetUserByIDHandler)
+	router.DELETE("/:id", handler.DeleteUserByIDHandler)
+	router.PUT("/update", handler.UpdateUserParamsHandler)
+	router.PATCH("/update/:id", handler.PatchUserParamsHandler)
+	router.POST("/:id/profile-picture", handler.UpdateProfilePictureHandler)
+	router.GET("/:id/profile-picture", handler.GetProfilePictureByUserID)
+	router.DELETE("/:id/profile-picture", handler.DeleteProfilePictureHandler)
 }

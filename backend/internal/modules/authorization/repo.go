@@ -51,9 +51,7 @@ func CreateUser(registration *types.User, handler *database.DBHandler) (*types.U
 		Password:  password,
 		Gender:    registration.Gender,
 		BirthDate: registration.BirthDate,
-		Role:      "USER",
 		CreatedAt: time.Now(),
-		Coins:     0,
 	}
 
 	err = handler.DB.Create(user).Error
