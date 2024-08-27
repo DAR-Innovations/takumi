@@ -36,6 +36,7 @@ func (tr *TakumiRouter) RegisterUserRoutes(handler *user.Handler) {
 	router.GET("/:id", handler.GetUserByIDHandler)
 	router.DELETE("/:id", handler.DeleteUserByIDHandler)
 	router.PUT("/update", handler.UpdateUserParamsHandler)
+	router.PATCH("/update/:id", handler.PatchUserParamsHandler)
 	router.POST("/:id/profile-picture", handler.UpdateProfilePictureHandler)
 	router.GET("/:id/profile-picture", handler.GetProfilePictureByUserID)
 	router.DELETE("/:id/profile-picture", handler.DeleteProfilePictureHandler)

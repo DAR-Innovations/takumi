@@ -46,6 +46,20 @@ func UpdateUserParams(update types.User, handler database.DBHandler) (*types.Use
 	return &user, nil
 }
 
+func PatchUserParams(userID int, updateData map[string]interface{}, handler database.DBHandler) (*types.User, error) {
+	user := types.User{}
+
+	if err := handler.DB.First(&user, userID).Error; err != nil {
+		return nil, err
+	}
+
+	if err := handler.DB.Model(&user).Updates(updateData).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
 func UpdateUserProfilePicture(userID int, profilePictureURL string, handler database.DBHandler) (*types.User, error) {
 	user := types.User{}
 	tx := handler.DB.Begin()

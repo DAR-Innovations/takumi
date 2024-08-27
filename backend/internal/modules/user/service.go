@@ -59,6 +59,19 @@ func (s *Service) UpdateUserParams(c *gin.Context, update types.User) (*types.Us
 	return user, nil
 }
 
+func (s *Service) PatchUserParams(c *gin.Context, userID int, updateData map[string]interface{}) (*types.User, error) {
+	user, err := PatchUserParams(userID, updateData, s.Handler)
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			c.AbortWithError(http.StatusNotFound, errors.New("user not found"))
+			return nil, errors.New("user not found")
+		}
+		c.AbortWithError(http.StatusInternalServerError, err)
+		return nil, errors.New("failed to update user")
+	}
+	return user, nil
+}
+
 func (s *Service) UpdateProfilePicture(c *gin.Context, userID int, profilePictureURL string) (*types.User, error) {
 	user, err := UpdateUserProfilePicture(userID, profilePictureURL, s.Handler)
 	if err != nil {

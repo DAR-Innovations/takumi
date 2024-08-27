@@ -70,6 +70,28 @@ func (h *Handler) UpdateUserParamsHandler(c *gin.Context) {
 	utils.SendSuccessJSON(c, updatedUser)
 }
 
+func (h *Handler) PatchUserParamsHandler(c *gin.Context) {
+	userID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: Invalid user ID", http.StatusBadRequest)
+		return
+	}
+
+	updateData := map[string]interface{}{}
+	if err := c.ShouldBindJSON(&updateData); err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	updatedUser, err := h.Service.PatchUserParams(c, userID, updateData)
+	if err != nil {
+		utils.SendMessageWithStatus(c, "ERROR: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	utils.SendSuccessJSON(c, updatedUser)
+}
+
 func (h *Handler) UpdateProfilePictureHandler(c *gin.Context) {
 	userIDParam := c.Param("id")
 	userID, err := strconv.Atoi(userIDParam)
