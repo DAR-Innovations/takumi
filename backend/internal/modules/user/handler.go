@@ -129,6 +129,13 @@ func (h *Handler) DeleteProfilePictureHandler(c *gin.Context) {
 	}
 
 	deletedUser, err := h.Service.DeleteProfilePicture(c, userID)
+
+	fileName := fmt.Sprintf("user_%d_profile_pic.jpg", userID)
+	if err := utils.DeleteFile("profile-pictures", fileName); err != nil {
+		log.Printf("Failed to delete: %s, error: %v", fileName, err)
+		return
+	}
+
 	if err != nil {
 		utils.SendMessageWithStatus(c, err.Error(), http.StatusInternalServerError)
 		return
