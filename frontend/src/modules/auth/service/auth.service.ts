@@ -13,7 +13,7 @@ class AuthService {
 	}
 
 	async getCurrentUser() {
-		return axios.get<CurrentUser>(`${this.baseUrl}/current`).then(res => res.data)
+		return axios.get<CurrentUser>(`${this.baseUrl}/current-user`)
 	}
 }
 
